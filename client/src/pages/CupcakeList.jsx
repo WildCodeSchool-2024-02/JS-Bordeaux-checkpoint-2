@@ -58,7 +58,6 @@ useEffect(() => {
       console.info(data);
     })
 }, []);
-  // Step 3: get all accessories
 
   // Step 5: create filter state
 if (isLoading) {
@@ -72,6 +71,7 @@ if (isLoading) {
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
+            <option value="">---</option>
             {accessoriesList.map((accessories) => (
             <option key={accessories.id}
               value={accessories.name}
@@ -84,11 +84,7 @@ if (isLoading) {
         {cupcakeList.map((cupcake) => (
           <Cupcake
           key={cupcake.id}
-          name={cupcake.name}
-          accessory={cupcake.accessory}
-          color1={cupcake.color1}
-          color2={cupcake.color2}
-          color3={cupcake.color3}
+          data={cupcake}
           />
           ))}
         {/* Step 5: filter cupcakes before repeating */}
