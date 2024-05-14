@@ -38,6 +38,7 @@ someCupcakes.push(
 /* ************************************************************************* */
 
 function CupcakeList() {
+  // const data = useLoaderData();
   // Step 1: get all cupcakes
   console.info(useLoaderData());
 
@@ -61,6 +62,7 @@ function CupcakeList() {
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
+
         <li className="cupcake-item">
           <Cupcake />
         </li>
