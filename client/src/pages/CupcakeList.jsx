@@ -62,10 +62,17 @@ function CupcakeList() {
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
+          <select>
           Filter by{" "}
-          <select id="cupcake-select">
-            <option value="">---</option>
             {/* Render an option for each accessory */}
+            <select id="cupcake-select">
+             <option value="">---</option>
+             <option value="1">Cherry</option>
+             <option value="2">Donut</option>
+             <option value="3">Chocolate</option>
+             <option value="4">Wild</option>
+            <option value="5">Christmas Candy</option>
+            </select>
             {accessories.map((accessory) => (
               <option key={accessory.id} value={accessory.id}>
                 {accessory.name}
