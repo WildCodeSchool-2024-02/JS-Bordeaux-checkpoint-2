@@ -64,21 +64,23 @@ function CupcakeList() {
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
+            {cupcakesAccessories.map((item) => (
+              <option value={item.index} key={item.id}>
+                {item.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
+
         {allCupcakes.map((item) => (
           <li key={item.id} className="cupcake-item">
-            <Cupcake data={allCupcakes} />
+            <Cupcake data={item} />
           </li>
         ))}
-
-        {/* <li className="cupcake-item">
-          <Cupcake />
-        </li> */}
         {/* end of block */}
       </ul>
     </>
