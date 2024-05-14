@@ -2,42 +2,6 @@ import { useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
-/* ************************************************************************* */
-const someCupcakes = [];
-someCupcakes.push(
-  {
-    id: 10,
-    accessory_id: "4",
-    accessory: "wcs",
-    color1: "blue",
-    color2: "white",
-    color3: "red",
-    name: "France",
-  },
-  {
-    id: 11,
-    accessory_id: "4",
-    accessory: "wcs",
-    color1: "yellow",
-    color2: "red",
-    color3: "black",
-    name: "Germany",
-  },
-  {
-    id: 27,
-    accessory_id: "5",
-    accessory: "christmas-candy",
-    color1: "yellow",
-    color2: "blue",
-    color3: "blue",
-    name: "Sweden",
-  }
-);
-
-/* you can use someCupcakes if you're stucked on step 1 */
-/* if you're fine with step 1, just ignore this ;) */
-/* ************************************************************************* */
-
 function CupcakeList() {
   // Step 1: get all cupcakes
 
@@ -45,6 +9,7 @@ function CupcakeList() {
   console.info(cupcakeData);
 
   // Step 3: get all accessories
+
   const [accessoriesData, setAccessoriesData] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3310/api/accessories")
@@ -55,7 +20,11 @@ function CupcakeList() {
       });
   },[]);
   console.info(accessoriesData)
+
   // Step 5: create filter state
+
+
+
   return (
     <>
       <h1>My cupcakes</h1>
@@ -66,6 +35,10 @@ function CupcakeList() {
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
+
+            {accessoriesData.map((data) => (
+          <option key={accessoriesData.id}>{data.name}</option>))}
+          
           </select>
         </label>
       </form>
