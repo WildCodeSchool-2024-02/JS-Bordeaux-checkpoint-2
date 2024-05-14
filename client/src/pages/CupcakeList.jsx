@@ -48,10 +48,12 @@ function CupcakeList() {
       setAccessories(data.json());
     });
   }, []);
-  console.info("acces", accessories);
+  console.log("acces", accessories);
 
-  // Step 3: get all accessories
-
+  const filterCupCakes = (accessorieName) => {
+    setUserOption(accessorieName);
+    cupcakes.filter((cupcake) => cupcake.accessory === userOption);
+  };
   // Step 5: create filter state
 
   return (
