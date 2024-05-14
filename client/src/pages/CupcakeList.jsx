@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
@@ -58,10 +58,6 @@ function CupcakeList() {
     setSelectedAccessory(value);
   };
 
-  console.info(cupcakes);
-  console.info(accessories);
-  console.info(selectedAccessory);
-
   return (
     <>
       <h1>My cupcakes</h1>
@@ -88,7 +84,9 @@ function CupcakeList() {
         {cupcakes.map((cupcake) =>
           cupcake.accessory_id === selectedAccessory ||
           selectedAccessory === "" ? (
-            <Cupcake key={cupcake.id} data={cupcake} />
+            <Link key={cupcake.id} to={`/cupcakes/${cupcake.id}`}>
+              <Cupcake data={cupcake} />
+            </Link>
           ) : null
         )}
         {/* Step 5: filter cupcakes before repeating */}
