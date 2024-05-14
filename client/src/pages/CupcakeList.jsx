@@ -40,7 +40,9 @@ someCupcakes.push(
 function CupcakeList() {
   const [cupcakeList, setCupcakeList] = useState([]);
   const [accessoriesList, setAccessoriesList] = useState([]);
+  const [selectedAccessorie, setSelectedAccessorie] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
 
 useEffect(() => {
   fetch("http://localhost:3310/api/cupcakes")
@@ -58,8 +60,6 @@ useEffect(() => {
       console.info(data);
     })
 }, []);
-
-  // Step 5: create filter state
 if (isLoading) {
   return <h2>Loading...</h2>;
 }
@@ -68,9 +68,8 @@ if (isLoading) {
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select id="cupcake-select" onChange={setSelectedAccessorie}>
             <option value="">---</option>
             {accessoriesList.map((accessories) => (
             <option key={accessories.id}
@@ -81,14 +80,12 @@ if (isLoading) {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {cupcakeList.map((cupcake) => (
+        {cupcakeList.filter(() => selectedAccessorie).map((cupcake) => (
           <Cupcake
           key={cupcake.id}
           data={cupcake}
           />
           ))}
-        {/* Step 5: filter cupcakes before repeating */}
-        {/* end of block */}
       </ul>
     </>
   );
