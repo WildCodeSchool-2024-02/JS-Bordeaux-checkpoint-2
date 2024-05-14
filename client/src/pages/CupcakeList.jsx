@@ -43,6 +43,7 @@ someCupcakes.push(
 function CupcakeList() {
   const allCupcakes = useLoaderData();
   const [accessories, setAccessories] = useState([]); 
+  const [selectedAccessory, setSelectedAccessory] = useState("");
 
   useEffect(() => {
     
@@ -57,42 +58,42 @@ function CupcakeList() {
       });
   }, []); 
 
-  return (
-    <>
-      <h1>My cupcakes</h1>
-      <form className="center">
-        <label htmlFor="cupcake-select">
-          <select>
-          Filter by{" "}
-            {/* Render an option for each accessory */}
-            <select id="cupcake-select">
-             <option value="">---</option>
-             <option value="1">Cherry</option>
-             <option value="2">Donut</option>
-             <option value="3">Chocolate</option>
-             <option value="4">Wild</option>
-            <option value="5">Christmas Candy</option>
-            </select>
-            {accessories.map((accessory) => (
-              <option key={accessory.id} value={accessory.id}>
-                {accessory.name}
-              </option>
-            ))}
-          </select>
-        </label>
-      </form>
-      <ul className="cupcake-list" id="cupcake-list">
-        {/* Repeat this block for each cupcake */}
-        {allCupcakes.length > 0 &&
-          allCupcakes.map((cupcake) => (
-            <li className="cupcake-item" key={cupcake.id}>
-              <Cupcake cupcake={cupcake} />
-            </li>
-          ))}
-        {/* Filter cupcakes before repeating (Step 5) */}
-      </ul>
-    </>
-  );
-}
+  const handleAccessoryChange = (event) => {
+    setSelectedAccessory(event.target.value);
+  };
 
-export default CupcakeList;
+  const filteredCupcakes =
+    selectedAccessory === ""
+      ? allCupcakes 
+      : allCupcakes.filter((cupcake) => cupcake.accessory_id === selectedAccessory);
+      
+        return (
+          <>
+            <h1>My cupcakes</h1>
+            <form className="center">
+              <label htmlFor="cupcake-select">
+                Filter by{" "}
+                <select id="cupcake-select" onChange={handleAccessoryChange} value={selectedAccessory}>
+                  <option value="">---</option>
+                  {accessories.map((accessory) => (
+                    <option key={accessory.id} value={accessory.id}>
+                      {accessory.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </form>
+            <ul className="cupcake-list" id="cupcake-list">
+              {/* Repeat this block for each cupcake */}
+              {filteredCupcakes.map((cupcake) => (
+                <li className="cupcake-item" key={cupcake.id}>
+                  <Cupcake cupcake={cupcake} />
+                </li>
+              ))}
+            </ul>
+          </>
+        );
+      }
+    
+      export default CupcakeList;
+      
