@@ -12,7 +12,7 @@ import CupcakeList from "./pages/CupcakeList";
 const getCupcakes = () =>
   fetch("http://localhost:3310/api/cupcakes")
     .then((res) => res.json())
-    .then((data) => console.info(data));
+    .then((data) => data);
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
-        loader: () => getCupcakes,
+        loader: () => getCupcakes(),
       },
     ],
   },
