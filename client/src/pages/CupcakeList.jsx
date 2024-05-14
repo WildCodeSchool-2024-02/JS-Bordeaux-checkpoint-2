@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
@@ -40,14 +40,13 @@ someCupcakes.push(
 
 function CupcakeList() {
   const cupcakesData = useLoaderData();
-  // const [accessories, setAccessories] = useState([]);
+  const [accessories, setAccessories] = useState([]);
 
   // Step 3: get all accessories
   useEffect(() => {
     fetch("http://localhost:3310/api/accessories")
       .then((res) => res.json())
-      // .then((data) => setAccessories(data))
-      .then((data) => console.info(data))
+      .then((data) => setAccessories(data))
       .catch((error) => console.error(error));
   }, []);
 
@@ -61,6 +60,11 @@ function CupcakeList() {
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.name}>
+                {accessory.name}
+              </option>
+            ))}
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
           </select>
