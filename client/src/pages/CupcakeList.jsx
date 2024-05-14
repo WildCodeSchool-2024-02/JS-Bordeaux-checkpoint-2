@@ -45,10 +45,10 @@ function CupcakeList() {
   const [accessories, setAccessories] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/accessories")
+    fetch("http://localhost:3310/api/accessories")
       .then((res) => res.json())
       .then((data) => setAccessories(data))
-      .catch((error) => console.info(error));
+      .catch((error) => console.error(error));
   }, []);
 
   console.info(accessories);
@@ -65,6 +65,11 @@ function CupcakeList() {
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.name}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
