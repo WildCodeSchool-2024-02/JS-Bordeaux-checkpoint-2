@@ -7,6 +7,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 import CupcakeList from "./pages/CupcakeList";
+import CupcakeDetails from "./pages/CupcakesDetails";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             .then((data) => data)
             .catch((err) => console.error(err)),
         // Step 1: load data here
+      },
+      {
+        path: "/cupcakes/:id",
+        element: <CupcakeDetails />,
       },
     ],
   },
