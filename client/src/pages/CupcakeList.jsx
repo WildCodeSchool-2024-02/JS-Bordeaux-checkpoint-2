@@ -61,8 +61,11 @@ function CupcakeList() {
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
-            <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessorie) => (
+              <option key={accessorie.id} value={accessorie.name}>
+                {accessorie.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
