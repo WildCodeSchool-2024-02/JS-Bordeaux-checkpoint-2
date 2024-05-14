@@ -72,6 +72,7 @@ if (isLoading) {
         {cupcakeList.map((cupcake) => (
           <Cupcake
           key={cupcake.id}
+          name={cupcake.name}
           />
           ))}
         {/* Step 5: filter cupcakes before repeating */}
