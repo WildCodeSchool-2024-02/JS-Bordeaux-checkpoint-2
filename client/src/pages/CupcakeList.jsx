@@ -2,8 +2,6 @@ import { useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
-/* ************************************************************************* */
-
 const someCupcakes = [];
 someCupcakes.push(
   {
@@ -35,10 +33,6 @@ someCupcakes.push(
   }
 );
 
-/* you can use someCupcakes if you're stucked on step 1 */
-/* if you're fine with step 1, just ignore this ;) */
-/* ************************************************************************* */
-
 function CupcakeList() {
   const cupcakesData = useLoaderData();
 
@@ -51,20 +45,22 @@ function CupcakeList() {
       .catch((err) => console.error(err));
   }, []);
 
-  console.info(accessories);
+  const [filter, setFilter] = useState(cupcakesData);
 
-  // Step 5: create filter state
+  const handleFilter = ({ target: { value } }) => {
+    setFilter(value === "" ? cupcakesData : cupcakesData.filter((cupcake) => cupcake.accessory === value));
+  };
 
   return (
     <>
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select id="cupcake-select" onChange={handleFilter}>
+            <option value="">---</option>
             {accessories.map((accessorie) => (
-              <option key={accessorie.id} value={accessorie.name}>
+              <option key={accessorie.id} value={accessorie.slug}>
                 {accessorie.name}
               </option>
             ))}
@@ -72,14 +68,10 @@ function CupcakeList() {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {cupcakesData &&
-          cupcakesData.map((cupcake) => (
-            <Cupcake key={cupcake.id} data={cupcake} />
-          ))}
-        {/* Step 5: filter cupcakes before repeating */}
-        <li className="cupcake-item">
-          <Cupcake />
-        </li>
+        {filter.map((cupcake) => (
+          <Cupcake key={cupcake.id} data={cupcake} />
+        ))}
+
         {/* end of block */}
       </ul>
     </>
