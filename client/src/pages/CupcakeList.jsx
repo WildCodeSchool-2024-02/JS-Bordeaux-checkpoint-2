@@ -41,8 +41,8 @@ someCupcakes.push(
 function CupcakeList() {
   const cupcakesData = useLoaderData();
   const [accessories, setAccessories] = useState([]);
+  const [selectedAccessory, setSelectedAccessory] = useState("");
 
-  // Step 3: get all accessories
   useEffect(() => {
     fetch("http://localhost:3310/api/accessories")
       .then((res) => res.json())
@@ -50,35 +50,42 @@ function CupcakeList() {
       .catch((error) => console.error(error));
   }, []);
 
-  // Step 5: create filter state
+  const handleAccessoryChange = (event) => {
+    setSelectedAccessory(event.target.value);
+  };
+
+  const filteredCupcakes = selectedAccessory
+    ? cupcakesData.filter((cupcake) => cupcake.accessory === selectedAccessory)
+    : cupcakesData;
 
   return (
     <>
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select
+            id="cupcake-select"
+            name="cupcake-select"
+            value={selectedAccessory}
+            onChange={handleAccessoryChange}
+          >
+            <option value="">---</option>
             {accessories.map((accessory) => (
-              <option key={accessory.id} value={accessory.name}>
+              <option key={accessory.id} value={accessory.slug}>
                 {accessory.name}
               </option>
             ))}
-            <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
           </select>
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {cupcakesData.map((cupcake) => (
+        {filteredCupcakes.map((cupcake) => (
           <Cupcake key={cupcake.id} data={cupcake} />
         ))}
-        {/* Step 2: repeat this block for each cupcake */}
         <li className="cupcake-item">
           <Cupcake />
         </li>
-        {/* Step 5: filter cupcakes before repeating */}
         {/* end of block */}
       </ul>
     </>
