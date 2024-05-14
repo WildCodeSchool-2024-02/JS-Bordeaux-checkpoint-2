@@ -42,20 +42,20 @@ function CupcakeList() {
   const cupcakesData = useLoaderData();
   console.info(cupcakesData);
 
-  const [accessorie, setAccessorie] = useState([])
+  const [accessories, setAccessories] = useState([]);
 
   const fetchAccessorie = () => {
-    fetch('http://localhost:3310/api/accessories')
-    .then((res) => res.json())
-    .then((data) => {
-      setAccessorie(data)
-    })
-  }
-  console.info(accessorie)
-  
+    fetch("http://localhost:3310/api/accessories")
+      .then((res) => res.json())
+      .then((data) => {
+        setAccessories(data);
+      });
+  };
+  console.info(accessories);
+
   useEffect(() => {
-    fetchAccessorie()
-  }, [])
+    fetchAccessorie();
+  }, []);
 
   // Step 5: create filter state
 
@@ -67,7 +67,11 @@ function CupcakeList() {
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
-            <option value="">---</option>
+            {accessories.map((accessorie) => (
+              <option key={accessorie.id} value={accessorie.name}>
+                {accessorie.name}
+              </option>
+            ))}
             {/* Step 4: add an option for each accessory */}
           </select>
         </label>
