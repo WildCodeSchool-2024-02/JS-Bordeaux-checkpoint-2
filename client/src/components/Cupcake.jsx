@@ -1,29 +1,30 @@
 import PropTypes from "prop-types";
-
 import "./Cupcake.css";
 
-function Cupcake({ data }) {
+function Cupcake({ cupcake }) {
+  const { accessory, color1, color2, color3, name } = cupcake;
+
   return (
     <div className="cupcake-container">
       <div className="cupcake">
-        <div className={`accessory ${data.accessory}`} />
+        <div className={`accessory ${accessory}`} />
         <div className="cream">
           <div
             className="cream-1"
             style={{
-              backgroundColor: data.color1,
+              backgroundColor: color1,
             }}
           />
           <div
             className="cream-2"
             style={{
-              backgroundColor: data.color2,
+              backgroundColor: color2,
             }}
           />
           <div
             className="cream-3"
             style={{
-              backgroundColor: data.color3,
+              backgroundColor: color3,
             }}
           />
         </div>
@@ -39,30 +40,20 @@ function Cupcake({ data }) {
           </div>
         </div>
       </div>
-
-      <div className="cupcake-name">{data.name}</div>
+      <div className="cupcake-name">{name}</div>
     </div>
   );
 }
 
 Cupcake.propTypes = {
-  data: PropTypes.shape({
+  cupcake: PropTypes.shape({
     accessory: PropTypes.string.isRequired,
     color1: PropTypes.string.isRequired,
     color2: PropTypes.string.isRequired,
     color3: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-  }),
-};
-
-Cupcake.defaultProps = {
-  data: {
-    accessory: "donut",
-    color1: "var(--default-cream-color)",
-    color2: "var(--default-cream-color)",
-    color3: "var(--default-cream-color)",
-    name: "",
-  },
+  }).isRequired,
 };
 
 export default Cupcake;
+
