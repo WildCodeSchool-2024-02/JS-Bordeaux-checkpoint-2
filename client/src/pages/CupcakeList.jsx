@@ -45,11 +45,13 @@ function CupcakeList() {
       .catch((err) => console.error(err));
   }, []);
 
-  const [filter, setFilter] = useState(cupcakesData);
+  const [filter, setFilter] = useState("");
 
-  const handleFilter = ({ target: { value } }) => {
-    setFilter(value === "" ? cupcakesData : cupcakesData.filter((cupcake) => cupcake.accessory === value));
-  };
+  const handleFilter = (e) => setFilter(e.target.value)
+
+  const filtered = filter
+  ? cupcakesData.filter((cupcake) => cupcake.accessory === filter)
+  : cupcakesData
 
   return (
     <>
@@ -68,7 +70,7 @@ function CupcakeList() {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {filter.map((cupcake) => (
+        {filtered.map((cupcake) => (
           <Cupcake key={cupcake.id} data={cupcake} />
         ))}
 
