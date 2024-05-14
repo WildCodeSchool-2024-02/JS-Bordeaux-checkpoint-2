@@ -39,6 +39,7 @@ someCupcakes.push(
 
 function CupcakeList() {
   const [cupcakeList, setCupcakeList] = useState([]);
+  const [accessoriesList, setAccessoriesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
 useEffect(() => {
@@ -47,7 +48,15 @@ useEffect(() => {
       .then((data) => {
         setCupcakeList(data);
         setIsLoading(false);
+        console.info(data);
 });
+
+  fetch("http://localhost:3310/api/accessories")
+    .then((result) => result.json())
+    .then((data) => {
+      setAccessoriesList(data);
+      console.info(data);
+    })
 }, []);
   // Step 3: get all accessories
 
@@ -63,8 +72,11 @@ if (isLoading) {
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
-            <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {accessoriesList.map((accessories) => (
+            <option key={accessories.id}
+              value={accessories.name}
+            >{accessories.name}</option>
+          ))}
           </select>
         </label>
       </form>
@@ -73,6 +85,10 @@ if (isLoading) {
           <Cupcake
           key={cupcake.id}
           name={cupcake.name}
+          accessory={cupcake.accessory}
+          color1={cupcake.color1}
+          color2={cupcake.color2}
+          color3={cupcake.color3}
           />
           ))}
         {/* Step 5: filter cupcakes before repeating */}
