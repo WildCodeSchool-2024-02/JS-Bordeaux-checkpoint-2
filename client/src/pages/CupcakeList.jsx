@@ -41,7 +41,6 @@ someCupcakes.push(
 function CupcakeList() {
   const cupcakesData = useLoaderData();
   const [accessories, setAccessories] = useState([]);
-  const [selectedAccessory, setSelectedAccessory] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:3310/api/accessories")
@@ -50,12 +49,14 @@ function CupcakeList() {
       .catch((error) => console.error(error));
   }, []);
 
-  const handleAccessoryChange = (event) => {
+  const [selectedAccessory, setSelectedAccessory] = useState("");
+  const handleAccessoryChange = (event) =>
     setSelectedAccessory(event.target.value);
-  };
 
   const filteredCupcakes = selectedAccessory
-    ? cupcakesData.filter((cupcake) => cupcake.accessory === selectedAccessory)
+    ? cupcakesData.filter(
+        (cupcake) => cupcake.accessory_id === selectedAccessory
+      )
     : cupcakesData;
 
   return (
@@ -72,7 +73,7 @@ function CupcakeList() {
           >
             <option value="">---</option>
             {accessories.map((accessory) => (
-              <option key={accessory.id} value={accessory.slug}>
+              <option key={accessory.id} value={accessory.id}>
                 {accessory.name}
               </option>
             ))}
@@ -81,14 +82,17 @@ function CupcakeList() {
       </form>
       <ul className="cupcake-list" id="cupcake-list">
         {filteredCupcakes.map((cupcake) => (
-          <Link key={cupcake.id} to={`cupcake/${cupcake.id}`}>
-          <Cupcake key={cupcake.id} data={cupcake} />
-          </Link>
+          <li className="cupcake-item" key={cupcake.id}>
+            <Link  to={`/cupcakes/${cupcake.id}`}>
+              <Cupcake key={cupcake.id} data={cupcake} />
+            </Link>
+          </li>
         ))}
-        <li className="cupcake-item">
-          <Cupcake />
-        </li>
-        {/* end of block */}
+        {/* {cupcakesData.map((cupcake) => (
+          <li key={cupcake.id} className="cupcake-item">
+            <Cupcake data={cupcake} />
+          </li>
+        ))} */}
       </ul>
     </>
   );
