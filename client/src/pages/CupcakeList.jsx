@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
@@ -34,8 +34,7 @@ someCupcakes.push(
 );
 
 function CupcakeList() {
-  const cupcakes = useLoaderData("cupcake");
-  console.info(cupcakes);
+  const cupcakes = useLoaderData("cupcakes");
 
   const [accessories, setAccessories] = useState([]);
 
@@ -46,7 +45,7 @@ function CupcakeList() {
       .catch((err) => console.error(err));
   }, []);
 
-  const [selectedAccessory, setSelectedAccessory] = useState("");
+  const [selectedAccessory, setSelectedAccessory] = useState("---");
   const handleChange = (e) => {
     setSelectedAccessory(e.target.value);
   };
@@ -58,7 +57,6 @@ function CupcakeList() {
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select" onChange={handleChange}>
             <option value="---">---</option>
@@ -74,9 +72,11 @@ function CupcakeList() {
         {cupcakes
               .filter((cupcake) => selectedAccessory === "---" || cupcake.accessory === selectedAccessory)
               .map((cupcake) => (
-                <li className="cupcake-item" key={cupcake.id}>
+                <Link to={`/cupcakes/${cupcake.id}`} key={cupcake.id}>
+                <li className="cupcake-item">
                   <Cupcake data={cupcake} />
                 </li>
+                </Link>
               ))}
       </ul>
     </>
