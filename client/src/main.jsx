@@ -8,13 +8,25 @@ import App from "./App";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 import CupcakeList from "./pages/CupcakeList";
+import CupcakeDetails from "./pages/CupcakeDetails"
 
-const cupcakeApi = () => 
-  fetch(`http://localhost:3310/api/cupcakes`)
-    .then((response) => response.json())
-    .then((data) => data)
-    .catch((err) => console.error(err));
-;
+const fetchApi = (url) =>  fetch(url)
+  .then(res => res.json())
+  .then(data => data)
+  .catch(err => console.error(err))
+
+// const cupcakeApi = () => 
+//   fetch(`http://localhost:3310/api/cupcakes`)
+//     .then((response) => response.json())
+//     .then((data) => data)
+//     .catch((err) => console.error(err));
+// ;
+
+// const cupcakeApiId = ({params}) =>
+//   fetch(`http://localhost:3310/api/cupcakes/${params.id}`)
+//         .then((response) => response.json())
+//         .then((data) => data)
+//         .catch((err) => console.error(err));
 
 const router = createBrowserRouter([
   {
@@ -32,7 +44,12 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
-        loader: () => cupcakeApi(),
+        loader: () => fetchApi(`http://localhost:3310/api/cupcakes`),
+      },
+      {
+        path: "/cupcakes/:id",
+        element: <CupcakeDetails/>,
+        loader: ({params}) => fetchApi(`http://localhost:3310/api/cupcakes/${params.id}`)
       },
     ],
   },
