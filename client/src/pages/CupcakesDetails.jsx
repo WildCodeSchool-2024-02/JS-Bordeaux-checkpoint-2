@@ -1,8 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import Cupcake from "../components/Cupcake";
 
 function CupcakeDetails() {
-  const { id } = useParams();
-  return <p>{id}</p>;
+  const finalCupcake = useLoaderData();
+
+  return <Cupcake data={finalCupcake} />;
 }
 
 export default CupcakeDetails;
