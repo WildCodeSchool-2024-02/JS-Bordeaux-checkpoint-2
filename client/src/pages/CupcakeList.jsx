@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
@@ -44,28 +44,32 @@ function CupcakeList() {
 
   const [accessories, setAccessories] = useState([]);
 
-  const fetchAccessories = () => {
+  // const fetchAccessories = () => {
+  //   fetch("http://localhost:3310/api/accessories")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setAccessories(data);
+  //     });
+  // };
+  // console.info(accessories);
+
+  useEffect(() => {
     fetch("http://localhost:3310/api/accessories")
-      .then((res) => res.json())
+      .then((response) => response.json())
       .then((data) => {
         setAccessories(data);
       });
-  };
-  console.info(accessories);
-
-  useEffect(() => {
-    fetchAccessories();
+    // fetchAccessories();
   }, []);
 
   // Step 5: create filter state
   const [selected, setSelected] = useState("");
 
-  const handleChange = (event) => 
-    setSelected(event.target.value)
+  const handleChange = (event) => setSelected(event.target.value);
 
-  const filteredCupcakes = selected 
-  ? cupcakesData.filter(cupcake => cupcake.accessory === selected)
-  : cupcakesData
+  const filteredCupcakes = selected
+    ? cupcakesData.filter((cupcake) => cupcake.accessory_id === selected)
+    : cupcakesData;
 
   return (
     <>
@@ -75,13 +79,10 @@ function CupcakeList() {
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select" value={selected} onChange={handleChange}>
-            <option value="">ALL</option>
-            {accessories.map((accessorie) => (
-              <option
-                key={accessorie.id}
-                value={accessorie.slug}
-              >
-                {accessorie.name}
+            <option value="">-</option>
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
               </option>
             ))}
             {/* Step 4: add an option for each accessory */}
@@ -91,7 +92,11 @@ function CupcakeList() {
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
         {filteredCupcakes.map((cupcake) => (
-          <Cupcake key={cupcake.id} data={cupcake} />
+          <li className="cupcake-item" key={cupcake.id}>
+            <Link to={`/cupcakes/${cupcake.id}`}>
+              <Cupcake data={cupcake} />
+            </Link>
+          </li>
         ))}
         {/* Step 5: filter cupcakes before repeating */}
         {/* end of block */}
