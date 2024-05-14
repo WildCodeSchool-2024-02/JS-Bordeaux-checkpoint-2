@@ -1,4 +1,3 @@
-import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
 
 /* ************************************************************************* */
@@ -37,9 +36,9 @@ someCupcakes.push(
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
 
-function CupcakeList() {
+function CupcakeList (){
+  
   // Step 1: get all cupcakes
-  console.info(useLoaderData());
 
   // Step 3: get all accessories
 
@@ -64,10 +63,15 @@ function CupcakeList() {
         <li className="cupcake-item">
           <Cupcake />
         </li>
+        <li className="cupcake-item">
+          <Cupcake />
+        </li>
+        
         {/* end of block */}
       </ul>
     </>
   );
+
 }
 
 export default CupcakeList;
