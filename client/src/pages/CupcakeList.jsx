@@ -1,5 +1,8 @@
+import { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import Cupcake from "../components/Cupcake";
+
+
 
 /* ************************************************************************* */
 const someCupcakes = [];
@@ -38,33 +41,48 @@ someCupcakes.push(
 /* ************************************************************************* */
 
 function CupcakeList() {
-  // Step 1: get all cupcakes
-  console.info(useLoaderData());
+  const allCupcakes = useLoaderData();
+  const [accessories, setAccessories] = useState([]); 
 
-  // Step 3: get all accessories
-
-  // Step 5: create filter state
+  useEffect(() => {
+    
+    fetch("http://localhost:3310/api/accessories")
+      .then((response) => response.json())
+      .then((data) => {
+        console.info(data); 
+        setAccessories(data); 
+      })
+      .catch((error) => {
+        console.error("Error fetching accessories:", error);
+      });
+  }, []); 
 
   return (
     <>
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {/* Render an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
-        {/* Step 5: filter cupcakes before repeating */}
-        <li className="cupcake-item">
-          <Cupcake />
-        </li>
-        {/* end of block */}
+        {/* Repeat this block for each cupcake */}
+        {allCupcakes.length > 0 &&
+          allCupcakes.map((cupcake) => (
+            <li className="cupcake-item" key={cupcake.id}>
+              <Cupcake cupcake={cupcake} />
+            </li>
+          ))}
+        {/* Filter cupcakes before repeating (Step 5) */}
       </ul>
     </>
   );
