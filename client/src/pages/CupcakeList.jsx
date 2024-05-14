@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
 
 /* ************************************************************************* */
@@ -41,7 +42,20 @@ function CupcakeList() {
   const cupcakesData = useLoaderData();
   console.info(cupcakesData);
 
-  // Step 3: get all accessories
+  const [accessorie, setAccessorie] = useState([])
+
+  const fetchAccessorie = () => {
+    fetch('http://localhost:3310/api/accessories')
+    .then((res) => res.json())
+    .then((data) => {
+      setAccessorie(data)
+    })
+  }
+  console.info(accessorie)
+  
+  useEffect(() => {
+    fetchAccessorie()
+  }, [])
 
   // Step 5: create filter state
 
