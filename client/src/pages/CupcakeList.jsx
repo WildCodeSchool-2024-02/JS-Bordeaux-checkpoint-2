@@ -55,14 +55,16 @@ function CupcakeList() {
   }, []);
   console.info(accessories);
 
+  const [selectAccessories, setSelectAccessories] = useState(" ");
+  const handleChange = (e) => setSelectAccessories(e.target.value);
+
   return (
     <>
       <h1>My cupcakes</h1>
       <form className="center">
         <label htmlFor="cupcake-select">
-          {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
+          <select id="cupcake-select" onChange={handleChange}>
             {accessories.map((cupAccessories) => (
               <option key={cupAccessories.id} value={cupAccessories.name}>
                 {cupAccessories.name}
@@ -73,9 +75,11 @@ function CupcakeList() {
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {dataCup.map((cupCake) => (
-          <Cupcake key={Cupcake.id} data={cupCake} />
-        ))}
+        {dataCup
+          .filter((cupcake) => cupcake.name === selectAccessories)
+          .map((cupCake) => (
+            <Cupcake key={Cupcake.id} data={cupCake} />
+          ))}
         {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
