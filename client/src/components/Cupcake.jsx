@@ -10,7 +10,6 @@ function Cupcake({ cupcake }) {
     color3 = "var(--default-cream-color)",
     name = "",
   } = cupcake;
-  console.info(cupcake)
 
   return (
     <div className="cupcake-container">
