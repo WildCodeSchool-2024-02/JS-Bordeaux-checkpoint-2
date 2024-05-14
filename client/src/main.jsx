@@ -25,11 +25,11 @@ const router = createBrowserRouter([
         element: <Instructions />,
       },
       {
-        path: "/cupcakes/:id",
+        path: "/cupcakes",
         element: <CupcakeList />,
-        loader: ( ) =>   
+        loader: () =>   
           fetch("http://localhost:3310/api/cupcakes")
-        .then(response => {response.json()})
+        .then(response => response.json())
         .then(data => data)
         .catch((error) => console.error(error))
 }
