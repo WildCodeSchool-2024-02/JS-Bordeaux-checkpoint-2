@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Cupcake from "../components/Cupcake";
@@ -90,7 +90,9 @@ function CupcakeList() {
           ))}
 
         <li className="cupcake-item">
-          <Cupcake />
+          <Link to="/cupcakes/:id">
+            <Cupcake />
+          </Link>
         </li>
         {/* end of block */}
       </ul>

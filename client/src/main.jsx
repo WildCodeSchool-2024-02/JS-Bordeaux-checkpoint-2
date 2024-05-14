@@ -8,13 +8,13 @@ import App from "./App";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 import CupcakeList from "./pages/CupcakeList";
+import CupcakeDetailsPage from "./pages/CupcakeDetailsPage";
 
 function fetchAPI() {
-  return fetch("http://localhost:3310/api/cupcakes"  )
+  return fetch("http://localhost:3310/api/cupcakes")
     .then((response) => response.json())
     .then((data) => data);
 }
-
 
 const router = createBrowserRouter([
   {
@@ -32,6 +32,11 @@ const router = createBrowserRouter([
       {
         path: "/cupcakes",
         element: <CupcakeList />,
+        loader: () => fetchAPI(),
+      },
+      {
+        path: "/cupcakes/:id",
+        element: <CupcakeDetailsPage />,
         loader: () => fetchAPI(),
       },
     ],
